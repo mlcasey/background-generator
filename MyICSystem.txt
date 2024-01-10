@@ -1,0 +1,67 @@
+My System for PPT Creation
+
+SPX weekly options only
+Generally try for 10 Delta ICs (except on Fridays ==> 5 Delta)
+
+Position Sizing
+When VIX is < 15
+1 contract per $1,500 of account value
+
+When Vix is 15 < > 20
+1 contract per $3,000 of account value
+
+When Vix is 20 < > 25
+1 contract per $5,000 of account value
+
+When VIX is > 25
+Eith er do nothing or buy straddles?
+
+Other elements:
+Do new 10 Delta positions only on:
+Tuesday for Wednesday (2 DTE)
+Thursday for Friday (2 DTE)
+Do new 5 Delta positions for Monday expiration
+
+Do not place new trades on Mondays or Wednesdays
+
+When I have to roll out an IC into a LIC.
+
+Threatened breach
+Partial breach
+Complete breach
+
+Change the speed an frequency of trading.
+
+Either use Chris' Turning Points approach to sell only the credit spread predicted by the TP analysis for the next expiration day
+
+OR
+
+Sell a LOT more time on the roll (up to 3 weeks) in order to defray the cost of the complete breach being covered.
+
+This is like turning down the speed of a conveyor belt in a manufacturing facility.
+
+*******
+
+Here is Chris's study called TrendviewNorm for TOS charts:
+
+declare lower;
+input FP = 5;
+input FP5 = 10;
+input FP6 = 20;
+# input SM=1;
+
+def DIRC = (close - close[1]) / 2;
+def DIR2C = (DIRC - DIRC[1]) / 2;
+def SLOPEC = DIRC - DIR2C;
+
+def TVC = ExpAverage(SLOPEC, FP) * 1;
+def TVC5 = ExpAverage(SLOPEC, FP5) * 1;
+def TVC6 = ExpAverage(SLOPEC, FP6) * 1;
+def TRD = TrueRange(high, close, low);
+def TRC = If high-low<average(high-low,100)/50 then TRD[1] else TRD;
+
+
+plot CloseTrend5 = TVC * 4 / Average(TRC, FP);
+plot CloseTrend10 = TVC5 * 4 / Average(TrueRange(high, close, low), FP5);
+plot CloseTrend20 = TVC6 * 4 / Average(TrueRange(high, close, low), FP6);
+
